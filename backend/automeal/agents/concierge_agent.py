@@ -6,17 +6,34 @@ class ConciergeAgent:
     def __init__(self):
         self.gemini = GeminiService()
 
-    def chat(self, message: str) -> str:
+
+    def chat(self, message):
 
         prompt = f"""
 You are AutoMeal Concierge.
 
-The user is scheduling food orders.
+Analyze the food request.
 
-Return a helpful response.
+Return ONLY JSON.
+
+Schema:
+
+{{
+ "intent": "",
+ "food_item": "",
+ "restaurant": "",
+ "schedule": {{
+    "frequency": "",
+    "day": "",
+    "time": ""
+ }},
+ "needs_clarification": false,
+ "confidence": 0.0
+}}
 
 User:
 {message}
+
 """
 
         return self.gemini.generate(prompt)
